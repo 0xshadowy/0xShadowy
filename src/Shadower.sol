@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "solmate/tokens/ERC721.sol";
-import "solmate/auth/Owned.sol";
+import "./SoulBoundToken.sol";
 import "./Repository.sol";
 
-contract Shadower is ERC721, Owned {
+contract Shadower is SoulBoundToken {
     uint256 public totalShadowers;
     uint256 public totalContributions;
 
@@ -38,7 +37,7 @@ contract Shadower is ERC721, Owned {
     event NewShad(uint256 indexed id, string indexed username, string indexed handle);
     event NewContribution(address indexed shad, string indexed url, ContributionType indexed contributionType);
 
-    constructor(address repository) ERC721("Shadower", "SHAD") Owned(msg.sender) {
+    constructor(address repository) SoulBoundToken("Shadower", "SHAD") {
         _repository = Repository(repository);
     }
 

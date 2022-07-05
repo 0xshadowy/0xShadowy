@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "solmate/tokens/ERC721.sol";
-import "solmate/auth/Owned.sol";
+import "./SoulBoundToken.sol";
 
-contract Repository is ERC721, Owned {
+contract Repository is SoulBoundToken {
     uint256 public totalRepositories;
 
     struct Repo {
@@ -19,7 +18,7 @@ contract Repository is ERC721, Owned {
 
     event NewRepo(uint256 indexed id, address indexed owner, string indexed url);
 
-    constructor() ERC721("Repository", "REPO") Owned(msg.sender) {}
+    constructor() SoulBoundToken("Repository", "REPO") {}
 
 	function isRegistered(string memory url) public view returns (bool) {
 		return registeredRepositories[url];
