@@ -2,13 +2,10 @@
 pragma solidity ^0.8.13;
 
 import "./SoulBoundToken.sol";
-import "./Repository.sol";
 
 contract Shadower is SoulBoundToken {
     uint256 public totalShadowers;
     uint256 public totalContributions;
-
-    Repository private _repository;
 
     enum ContributionType { PULL_REQUEST_OPENED, PULL_REQUEST_MERGED, ISSUE_OPENED }
 
@@ -37,15 +34,13 @@ contract Shadower is SoulBoundToken {
     event NewShad(uint256 indexed id, string indexed username, string indexed handle);
     event NewContribution(address indexed shad, string indexed url, ContributionType indexed contributionType);
 
-    constructor(address repository) SoulBoundToken("Shadower", "SHAD") {
-        _repository = Repository(repository);
-    }
+    constructor(address repository) SoulBoundToken("Shadower", "SHAD") {}
 
     function isAShad(address addr) public view returns (bool) {
         return shadowers[addr].addr != address(0);
     }
 
-    function registerAShad(string memory username, string memory handle) public returns (uint256) {
+    function becomeAShad(string memory username, string memory handle) public returns (uint256) {
         require(!isAShad(msg.sender), "Already a big Shad");
         uint256 newTotalShadowers = ++totalShadowers;
 
